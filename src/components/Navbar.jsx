@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaReact } from "react-icons/fa";
-import { MdMenu, MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
+import { MdMenu, MdOutlineLightMode } from "react-icons/md";
 import MenuDrawer from "./MenuDrawer";
 
 export const Navbar = () => {
