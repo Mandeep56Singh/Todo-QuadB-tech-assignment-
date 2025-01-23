@@ -1,18 +1,40 @@
-import { Navbar } from "./components/Navbar";
-import SideBar from "./components/SideBar";
-import TaskPanel from "./components/TaskPanel";
+// src/App.jsx
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import {  persistor } from "./store/store";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+
+// eslint-disable-next-line react/prop-types
+const PrivateRoute = ({ children }) => {
+  const user = useSelector((state) => state.auth.user);
+  return user ? children : <Navigate to="/login" replace />;
+};
 
 function App() {
   return (
-    <div className="py-2 px-4  sm:px-4 md:px-8 flex flex-col gap-4 ">
-      <Navbar></Navbar>
-      <div className="flex sm:flex-row flex-col gap-12">
-        <div className="md:block md:mt-8 hidden">
-          <SideBar></SideBar>
-        </div>
-        <TaskPanel></TaskPanel>
-      </div>
-    </div>
+    <PersistGate loading={null} persistor={persistor}>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </Router>
+    </PersistGate>
   );
 }
 

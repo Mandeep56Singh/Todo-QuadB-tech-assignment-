@@ -1,20 +1,26 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; 
-import todoReducer from './slice/todoSlice'
+// store.js
+import { configureStore, combineReducers } from "@reduxjs/toolkit"; // Add combineReducers
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import todoReducer from "./slice/todoSlice";
+import authReducer from "./slice/authSlice"; 
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["todos"], 
+  whitelist: ["auth", "todos"], 
 };
 
-const persistedReducer = persistReducer(persistConfig, todoReducer);
+// Create root reducer using combineReducers
+const rootReducer = combineReducers({
+  auth: authReducer,
+  todos: todoReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    todos: persistedReducer,
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

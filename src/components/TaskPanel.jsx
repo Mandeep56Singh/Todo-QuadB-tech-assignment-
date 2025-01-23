@@ -34,7 +34,7 @@ const TaskPanel = () => {
     <div className="w-full">
       <AddTodo onAddTask={handleTaskAdd} />
       <ul>
-        {todos.map((todo, index) => (
+        { todos.map((todo, index) => (
           <li
             key={todo.id}
             className={`${

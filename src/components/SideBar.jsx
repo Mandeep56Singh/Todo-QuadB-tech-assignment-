@@ -18,7 +18,7 @@ const SideBar = () => {
       <div className="p-4 flex flex-col gap-4 bg-white rounded-xl">
         <div className="border-b-2 border-gray-200 pb-4">
             <div className="text-xl font-medium">Total Tasks</div>
-            <div className="text-xl">{todos.length}</div>
+            <div className="text-xl">{todos ? todos.length : 0}</div>
         </div>
         {/* Chart */}
         <div></div>

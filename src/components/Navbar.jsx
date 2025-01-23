@@ -1,16 +1,24 @@
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaReact } from "react-icons/fa";
-import { MdMenu, MdOutlineLightMode } from "react-icons/md";
+import { IoMdExit } from "react-icons/io";
+import { MdMenu } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../store/slice/authSlice";
 import MenuDrawer from "./MenuDrawer";
-
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
   return (
     <div className="relative">
-      <div
-        className={`${isOpen ? "block" : "hidden"}`}
-      >
+      <div className={`${isOpen ? "block" : "hidden"}`}>
         <MenuDrawer isOpen={isOpen} setIsOpen={setIsOpen}></MenuDrawer>
       </div>
       <div className="  flex justify-between  items-center relative">
@@ -30,8 +38,8 @@ export const Navbar = () => {
           <button>
             <CiSearch className="text-3xl"></CiSearch>
           </button>
-          <button>
-            <MdOutlineLightMode className="text-3xl "></MdOutlineLightMode>
+          <button onClick={handleLogout}>
+            <IoMdExit className="text-3xl "></IoMdExit>
           </button>
         </div>
       </div>
